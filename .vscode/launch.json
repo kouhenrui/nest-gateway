@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Program",  // 配置名称
+      "type": "node",            // 调试器类型（这里是 Node.js）
+      "request": "launch",       // 启动调试
+      "skipFiles": ["<node_internals>/**"], // 跳过 Node.js 内部文件
+      "program": "${workspaceFolder}/main.ts",  // 要调试的文件（根据你的项目调整）
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"], // 编译后的文件路径（如果使用 TypeScript）
+      "preLaunchTask": "npm: build"  // 可选，调试前运行构建任务
+    }
+  ]
+}
