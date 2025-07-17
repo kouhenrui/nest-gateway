@@ -48,7 +48,6 @@ export class AccountService {
       const expiresIn = Number(jwtOptions.expiresIn);
       if (isNaN(expiresIn)) throw new CustomError('JWT过期时间无效');
       const exp = new Date(Date.now() + expiresIn * 1000);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const token = await this.jwtService.signAsync(body, jwtOptions);
       const redisData: { token: string; exp: Date } = { token, exp };
       await this.redisService.set(
@@ -117,10 +116,7 @@ export class AccountService {
    */
   async RefreshToken(claim: JwtClaims): Promise<{ token: string; exp: Date }> {
     try {
-      const account = await this.accountRepository.findOneBy({
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-        id: claim.id,
-      });
+      const account = await this.accountRepository.findOneBy({ id: claim.id });
       if (!account) throw new CustomError('token不存在');
       const signData: JwtClaims = {
         id: account.id,

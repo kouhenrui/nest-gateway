@@ -29,8 +29,8 @@ export class AccountController {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       const acc = req['acc'];
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       if (!acc) throw new CustomError('token不存在');
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       return await this.accountService.RefreshToken(acc);
     } catch (error: unknown) {
       if (error instanceof CustomError) console.log(error.message);

@@ -23,7 +23,9 @@ import { JwtService } from '@nestjs/jwt';
 import config from '../../config/config';
 import { RedisService } from '../redis/redis.service';
 // import { JwtMiddleware } from '../../middleware/jwt.middleware';
-
+import { AiModule } from '../ai/ai.module';
+// import { WsModule } from '../ws/ws.module';
+// import { WsGateway } from '../ws/ws.gateway';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -115,6 +117,8 @@ import { RedisService } from '../redis/redis.service';
     //   }),
     //   inject: [ConfigService],
     // }),
+    AiModule,
+    // WsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -122,6 +126,7 @@ import { RedisService } from '../redis/redis.service';
     JwtService, //jwt生成验证
     RedisService, //redis服务
     CasbinAuthService, //权限操作服务
+    // WsGateway,
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,

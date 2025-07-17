@@ -4,14 +4,20 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { LoggerManager } from './util/log';
+// import { IoAdapter } from '@nestjs/platform-socket.io'; // 导入适配器
 // import { CasbinAuthService } from './module/casbin/casbin.service';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = LoggerManager.getInstance({ context: 'AppLogger' });
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
   app.enableCors(); //支持跨域
   app.useGlobalPipes(new ValidationPipe());
+  // 配置 WebSocket 适配器
+  // app.useWebSocketAdapter(new IoAdapter(app));
   // 获取 ConfigService 实例
   const configService = app.get(ConfigService);
-  const logger = LoggerManager.getInstance({ context: 'AppLogger' });
+
   // const casbinService = app.get(CasbinAuthService);
   // await casbinService.init();
   const config = new DocumentBuilder()
